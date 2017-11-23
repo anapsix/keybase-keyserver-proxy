@@ -5,7 +5,7 @@ Run yourself a proxy..
 
 ## Step 1 - optional - Build
 ```
-docker build -t keybase-keyserver-proxy
+docker build -t keybase-keyserver-proxy .
 ```
 
 ## Step 2 - Run
