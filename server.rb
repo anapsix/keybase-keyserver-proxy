@@ -41,14 +41,14 @@ end
 Cuba.define do
   on get do
     # /favicon.ico
-    on "favicon.ico" do
+    on "/favicon.ico" do
       res.status = 404
       res.write "#### 404 ####"
       res.finish
     end
     on root do
-      results = 'try "/pks/lookup?op=get&options=mr&search=0x"'
-      res.write cli?(req.user_agent) ? results + "\n" : pre_wrap(results)
+      results = "try \"/pks/lookup?op=get&options=mr&search=0x\"\nor\ngpg --keyserver #{req.base_url} --recv-keys B416D3911B1D1AA0D47D5F4E5E93F7F309CAC1B2"
+      res.write auto_wrap(results)
     end
     on "pks/lookup" do
       q = env['QUERY_STRING'].split('&').map{|k| k.split('=') }.to_h
