@@ -15,7 +15,7 @@ docker run -d --name kkp -p 11371:11371 anapsix/keybase-keyserver-proxy
 
 ## Step 3 - Profit!
 ```
-gpg --keyserver 127.0.0.1 --recv-keys B416D3911B1D1AA0D47D5F4E5E93F7F309CAC1B2
+gpg --keyserver localhost --recv-keys B416D3911B1D1AA0D47D5F4E5E93F7F309CAC1B2
 ```
 
 ## Step 4 - cleanup

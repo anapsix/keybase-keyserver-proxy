@@ -1,15 +1,11 @@
-FROM debian:stable-slim
-MAINTAINER Anastas Dancha <anapsix@random.io>
-COPY . /srv/app
-WORKDIR /srv/app
-RUN apt-get update && apt-get dist-upgrade --yes && \
-    apt-get install ruby ruby-dev build-essential --yes && \
-    gem install bundle --no-doc && \
-    bundle install --deployment && \
-    apt-get purge build-essential ruby-dev --yes && \
-    apt-get autoremove --yes && \
-    apt-get clean all && \
-    rm -rf /var/cache/*
-    
+FROM ruby:alpine
+LABEL maintainer="Anastas Dancha <https://github.com/anapsix>"
+ENV APP_ROOT=/app
+WORKDIR ${APP_ROOT}
+COPY Gemfile Gemfile.lock ${APP_ROOT}/
+RUN apk add --no-cache libstdc++ g++ make &&\
+    bundle install --deployment &&\
+    apk del libstdc++ g++ make
+COPY . ${APP_ROOT}/
 EXPOSE 11317
-CMD /srv/app/start.sh
+CMD /app/start.sh
