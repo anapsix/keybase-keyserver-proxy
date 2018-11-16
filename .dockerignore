@@ -1,2 +1,6 @@
+.git
+.bundle
+.gitignore
+.dockerignore
 vendor
 Dockerfile
