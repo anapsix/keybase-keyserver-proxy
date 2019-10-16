@@ -76,6 +76,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+check_bin() {
+  if ! which "$1" >/dev/null; then
+    error "$1 binary not found, exiting.."
+  fi
+}
+
+check_bin "gpg"
+
 if [[ -z "${recipients_file:-}" ]]; then
   error "Need recipients file to process.." -
   usage
