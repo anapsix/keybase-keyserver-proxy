@@ -1,5 +1,7 @@
 # keybase-keyserver-proxy
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/anapsix/keybase-keyserver-proxy)](https://hub.docker.com/r/anapsix/keybase-keyserver-proxy)
+
 Annoyed about not being able to do import public keys from Keybase with gpg `--recv-keys`?
 Run yourself a proxy..
 
