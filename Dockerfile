@@ -7,5 +7,5 @@ RUN apk add --no-cache libstdc++ g++ make &&\
     bundle install --deployment &&\
     apk del libstdc++ g++ make
 COPY . ${APP_ROOT}/
-EXPOSE 11317
+EXPOSE 11371
 CMD /app/start.sh
