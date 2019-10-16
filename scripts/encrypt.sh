@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -u
-set -e
 set -o pipefail
 
 info() {
@@ -28,6 +27,17 @@ error() {
   echo >&2 -e "${TIME:-}[\e[91mERROR\e[0m] $1"
   if [[ "${exit_code}" != "-" ]]; then
     exit ${exit_code}
+  fi
+}
+
+getval() {
+  local x="${1%%=*}"
+  if [[ "$x" = "$1" ]]; then
+    echo "${2}"
+    return 2
+  else
+    echo "${1##*=}"
+    return 1
   fi
 }
 
@@ -67,9 +77,9 @@ while [[ $# -gt 0 ]]; do
       ARMOR="--armor"
       shift 1
     ;;
-    -r|--recipients)
-      recipients_file="$2"
-      shift 2
+    -r|--recipients|--recipients=*)
+      recipients_file="$(getval "$1" "${2:-}")"
+      shift $?
     ;;
     -*)
       error "Unexpected option \"$1\"" -
@@ -85,6 +95,9 @@ while [[ $# -gt 0 ]]; do
     ;;
   esac
 done
+
+# start catching all error
+set -e
 
 check_bin() {
   if ! which "$1" >/dev/null; then
