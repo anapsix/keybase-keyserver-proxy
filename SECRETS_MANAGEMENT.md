@@ -48,7 +48,7 @@ You can list all GPG imported keys with `gpg --list-keys`
 
 1. create `secrets_file.recipients` (in the same directory as `secrets_file.txt`), making sure it contains a list of intended recipients one per line in the following format: `KEYFINGERPRINT  "First Last <email@example.com>"`.
 
-   Everything after `KEYFINGERPRINT` will be ignored and you could use it for free-form comments, but let's stick to full name and email. See [`examples/secrets_file.recipient`](./examples/secrets_file.recipient).
+   Everything after `KEYFINGERPRINT` will be ignored and you could use it for free-form comments, but let's stick to full name and email. See [`examples/secrets_file.recipients`](./examples/secrets_file.recipients).
 
    **Make sure to include your own public key there, otherwise you will not be able to decrypt it yourself.**
 
