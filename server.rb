@@ -9,22 +9,36 @@ require "securerandom"
 
 def get_key(kf)
   STDERR.puts "getting key \"#{kf}\""
-  kb_uri = "https://keybase.io/_/api/1.0/user/user_search.json?q=#{kf}&num_wanted=2"
+  kb_uri = "https://keybase.io/_/api/1.0/user/lookup.json?fields=public_keys&key_fingerprint=#{kf}"
   user_response = RestClient.get(kb_uri)
   data = JSON.parse(user_response.body)
 
-  if data['list'].count == 0
-    STDERR.puts 'Error: no users found'
+  if data['them'].count == 0
+    STDERR.puts 'Error: no results'
     return nil
-  elsif data['list'].count > 1
-    STDERR.puts 'Error: more than one user found'
+  elsif data['them'].count > 1
+    STDERR.puts 'Error: more than one result returned'
     return nil
   end
 
-  keybase_username = data['list'].first['keybase']['username']
-  key_response = RestClient.get("https://keybase.io/#{keybase_username}/pgp_keys.asc")
+  public_keys = data['them'].first['public_keys'].select do |k,v|
+    v.class == Hash && v["key_fingerprint"] == kf.downcase
+  end
 
-  return key_response.body
+  if public_keys.count == 0
+    STDERR.puts 'Error: no public keys'
+  elsif public_keys.count > 1
+    STDERR.puts 'Error: more than one public key'
+  end
+
+  # in case we're looking for non-primary key
+  public_key = public_keys.flatten.select do |k|
+    k.class == Hash && k['key_fingerprint'] == kf.downcase
+  end
+
+  public_key_data = public_key.first['bundle']
+
+  return public_key_data
 end
 
 def cli?(user_agent)
