@@ -8,18 +8,20 @@ require "useragent"
 require "securerandom"
 
 def get_key(kf)
-  kb_uri = "https://keybase.io/_/api/1.0/user/autocomplete.json?q=#{kf}&num_wanted=2"
+  STDERR.puts "getting key \"#{kf}\""
+  kb_uri = "https://keybase.io/_/api/1.0/user/user_search.json?q=#{kf}&num_wanted=2"
   user_response = RestClient.get(kb_uri)
   data = JSON.parse(user_response.body)
 
-  if data['completions'].count == 0
+  if data['list'].count == 0
+    STDERR.puts 'Error: no users found'
     return nil
-  elsif data['completions'].count > 1
-    puts 'Error'
+  elsif data['list'].count > 1
+    STDERR.puts 'Error: more than one user found'
     return nil
   end
 
-  keybase_username = data['completions'].first['components']['username']['val']
+  keybase_username = data['list'].first['keybase']['username']
   key_response = RestClient.get("https://keybase.io/#{keybase_username}/pgp_keys.asc")
 
   return key_response.body
@@ -31,7 +33,7 @@ def cli?(user_agent)
 end
 
 def pre_wrap(string)
-  return "<pre>#{string}</pre>" 
+  return "<pre>#{string}</pre>"
 end
 
 def auto_wrap(results)
