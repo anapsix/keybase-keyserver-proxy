@@ -5,7 +5,7 @@
 Annoyed about not being able to do import public keys from Keybase with gpg `--recv-keys`?
 Run yourself a proxy..
 
-> See [SECRETS_MANAGEMENT.md](./SECRETS_MANAGEMENT.md) for usage examples, and musings on keeping sensitive files in SCM repos.
+> See [SECRETS_MANAGEMENT.md][1] for usage examples, and musings on keeping sensitive files in SCM repos.
 
 ## Step 1 - optional - Build
 ```bash
@@ -30,3 +30,6 @@ gpg --keyserver localhost --recv-keys B416D3911B1D1AA0D47D5F4E5E93F7F309CAC1B2
 ```bash
 docker rm -f kkb
 ```
+
+[link reference]::
+[1]: https://github.com/anapsix/keybase-keyserver-proxy/blob/master/SECRETS_MANAGEMENT.md

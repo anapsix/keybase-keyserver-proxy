@@ -1,11 +1,13 @@
-FROM ruby:alpine
+FROM ruby:2.6-alpine3.11
 LABEL maintainer="Anastas Dancha <https://github.com/anapsix>"
 ENV APP_ROOT=/app
 WORKDIR ${APP_ROOT}
 COPY Gemfile Gemfile.lock ${APP_ROOT}/
-RUN apk add --no-cache libstdc++ g++ make &&\
+RUN apk upgrade -U &&\
+    apk add --no-cache g++ make &&\
     bundle install --deployment &&\
-    apk del libstdc++ g++ make
+    apk del g++ make &&\
+    rm -rf /var/cache/apk
 COPY . ${APP_ROOT}/
 EXPOSE 11371
 CMD /app/start.sh
