@@ -28,7 +28,7 @@ gpg --keyserver localhost --recv-keys B416D3911B1D1AA0D47D5F4E5E93F7F309CAC1B2
 
 ## Step 4 - cleanup
 ```bash
-docker rm -f kkb
+docker rm -f kkp
 ```
 
 [link reference]::

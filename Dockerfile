@@ -1,4 +1,4 @@
-FROM ruby:2.6-alpine3.11
+FROM ruby:2.6-alpine3.13
 LABEL maintainer="Anastas Dancha <https://github.com/anapsix>"
 ENV APP_ROOT=/app
 WORKDIR ${APP_ROOT}
