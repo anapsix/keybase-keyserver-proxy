@@ -91,4 +91,4 @@ if [[ ! -r "${secrets_file}" ]]; then
   error "Unable to read secrets file \"${secrets_file}\", exiting.."
 fi
 
-gpg --list-only --no-default-keyring --secret-keyring /dev/null ${secrets_file} 2>&1 | grep -A1 "encrypted with"
+gpg --list-packets --no-default-keyring --secret-keyring /dev/null ${secrets_file} 2>&1 | grep -A1 "encrypted with"
